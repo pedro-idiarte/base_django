@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Make Purchase - AgileStore{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Make a Purchase</h2>
+        
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text">
+                                <strong>Category:</strong> {{ product.get_category_display }}<br>
+                                <strong>Price:</strong> ${{ product.price }}<br>
+                                <strong>Stock:</strong> {{ product.stock_quantity }} units
+                            </p>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control" name="quantity" value="1" min="1" max="{{ product.stock_quantity }}">
+                                    <button type="submit" class="btn btn-primary">Buy</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                No products available. <a href="{% url 'inventory:product_create' %}">Add some products first!</a>
+            </div>
+        {% endif %}
+        
+        <div class="mt-3">
+            <a href="{% url 'cart:dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

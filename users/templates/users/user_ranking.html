@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}User Ranking - AgileStore{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Top Spenders Ranking</h2>
+        
+        <div class="mb-3">
+            <a href="{% url 'users:user_list' %}" class="btn btn-primary">All Users</a>
+            <a href="{% url 'users:dashboard' %}" class="btn btn-info">Dashboard</a>
+        </div>
+
+        {% if ranking %}
+            <div class="row">
+                {% for rank_item in ranking %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                #{{ forloop.counter }} - {{ rank_item.email }}
+                            </h5>
+                            <p class="card-text">
+                                <strong>Total Spent:</strong> ${{ rank_item.total_spent|floatformat:2 }}
+                            </p>
+                            <a href="{% url 'users:user_detail' rank_item.email %}" class="btn btn-sm btn-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                No ranking data available.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

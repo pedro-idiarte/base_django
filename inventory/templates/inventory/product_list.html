@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Products - AgileStore{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>All Products</h2>
+        
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text">
+                                <strong>Category:</strong> {{ product.get_category_display }}<br>
+                                <strong>Price:</strong> ${{ product.price }}<br>
+                                <strong>Stock:</strong> {{ product.stock_quantity }} units
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                No products available.
+            </div>
+        {% endif %}
+        
+        <div class="mt-3">
+            <a href="{% url 'cart:dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

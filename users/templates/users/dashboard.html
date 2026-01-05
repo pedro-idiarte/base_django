@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - AgileStore{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Store Dashboard</h2>
+        
+        <div class="mb-3">
+            <a href="{% url 'users:user_list' %}" class="btn btn-primary">Users List</a>
+            <a href="{% url 'users:ranking' %}" class="btn btn-primary">User Ranking</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-4 text-primary">{{ stats.total_users }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Active Users</h5>
+                <p class="card-text display-4 text-success">{{ stats.active_users }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Purchases</h5>
+                <p class="card-text display-4 text-info">{{ stats.total_purchases }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Revenue</h5>
+                <p class="card-text display-4 text-warning">${{ stats.total_revenue|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Average Purchase Value</h5>
+                <p class="card-text display-4 text-secondary">${{ stats.average_purchase_value|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Conversion Rate</h5>
+                <p class="card-text display-4 text-muted">{{ conversion_rate }}%</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

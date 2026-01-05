@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}User Details - AgileStore{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>User Details</h2>
+        
+        <div class="mb-3">
+            <a href="{% url 'users:user_list' %}" class="btn btn-primary">Back to Users</a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>{{ user.email }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Member Since:</strong> {{ user.created_at|date:"Y-m-d H:i" }}</p>
+                        <p><strong>Total Spent:</strong> ${{ user.total_spent|floatformat:2 }}</p>
+                        <p><strong>Total Purchases:</strong> {{ user.purchase_count }}</p>
+                    </div>
+                </div>
+
+                <h4>Purchase History</h4>
+                {% if user.purchases %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for purchase in user.purchases %}
+                            <tr>
+                                <td>{{ purchase.purchase_date|date:"Y-m-d H:i" }}</td>
+                                <td>{{ purchase.product.name }}</td>
+                                <td>{{ purchase.quantity }}</td>
+                                <td>${{ purchase.total_price|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-info">
+                        No purchases yet.
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <h4>Favorite Products</h4>
+                {% if user.favorite_products %}
+                    <div class="list-group">
+                        {% for fav in user.favorite_products %}
+                        <a href="#" class="list-group-item">
+                            <h6 class="mb-1">{{ fav.product.name }}</h6>
+                            <p class="mb-1 text-muted">Times Bought: {{ fav.times_bought }}</p>
+                            <small>Total Quantity: {{ fav.total_quantity }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No favorite products yet.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
