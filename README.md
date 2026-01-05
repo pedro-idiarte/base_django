@@ -58,4 +58,4 @@ Não há implementação de segurança, escalabilidade ou integração com meios
 
 ## 🧑‍💻 Autor
 
-Projeto desenvolvido por **Pedro Idiarte** como parte de meu portfólio.  
+Projeto desenvolvido por **Pedro Idiarte** como parte do portfólio.  
